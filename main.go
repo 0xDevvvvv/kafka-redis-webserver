@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/0xDevvvvv/kafka-redis-webserver/kafka"
@@ -64,6 +64,6 @@ func main() {
 	router := gin.Default()
 	router.POST("/push", handlePush)
 	router.GET("/pull/:key", handlePull)
-	fmt.Println("✅ Server is running at http://localhost:8080")
+	log.Println("✅ Server is running at http://localhost:8080")
 	router.Run(":8080")
 }

@@ -28,7 +28,7 @@ func InitRedis() {
 
 func Set(ctx context.Context, key, value string) error {
 	err := client.Set(ctx, key, value, 0)
-	if err != nil {
+	if err.Err() != nil {
 		log.Printf("Error Storing in redis: %v", err)
 	}
 	return err.Err()
