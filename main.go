@@ -23,7 +23,7 @@ const (
 var brokers = []string{"localhost:9092"}
 
 // handler for post request
-func handlePush(c *gin.Context) {
+func handlePOST(c *gin.Context) {
 	var msg Message
 	if err := c.ShouldBindJSON(&msg); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid payload"})
@@ -36,7 +36,7 @@ func handlePush(c *gin.Context) {
 }
 
 // handler for get request
-func handlePull(c *gin.Context) {
+func handleGET(c *gin.Context) {
 	key := c.Param("key")
 	value, err := redis.Get(context.Background(), key)
 	if err != nil {
@@ -62,8 +62,8 @@ func main() {
 
 	//set up HTTP endpoint
 	router := gin.Default()
-	router.POST("/push", handlePush)
-	router.GET("/pull/:key", handlePull)
+	router.POST("/insert", handlePOST)
+	router.GET("/read/:key", handleGET)
 	log.Println("✅ Server is running at http://localhost:8080")
 	router.Run(":8080")
 }
